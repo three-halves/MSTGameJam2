@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b921f1f94192464da5919fc9f8c3d27, type: 3}
+  m_Name: MultiEight
+  m_EditorClassIdentifier: 
+  nodes:
+  - bulletSpawnerPrefabs:
+    - {fileID: 6311454542148068465, guid: 63b898c155dc3db40a12d554af45258a, type: 3}
+    - {fileID: 6311454542148068465, guid: 63b898c155dc3db40a12d554af45258a, type: 3}
+    pos: {x: -5, y: 0}
+    posDelta: {x: 10, y: 0}
+    delay: 2
+    addAngle: 0
+    randomPosOverride: 0
+    randomAngleOverride: 0
+  - bulletSpawnerPrefabs:
+    - {fileID: 6311454542148068465, guid: 63b898c155dc3db40a12d554af45258a, type: 3}
+    - {fileID: 6311454542148068465, guid: 63b898c155dc3db40a12d554af45258a, type: 3}
+    pos: {x: 0, y: -3}
+    posDelta: {x: 0, y: 6}
+    delay: 3
+    addAngle: 0
+    randomPosOverride: 0
+    randomAngleOverride: 0
+  difficulty: 1

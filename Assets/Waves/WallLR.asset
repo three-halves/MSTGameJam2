@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b921f1f94192464da5919fc9f8c3d27, type: 3}
+  m_Name: WallLR
+  m_EditorClassIdentifier: 
+  nodes:
+  - bulletSpawnerPrefabs:
+    - {fileID: 6311454542148068465, guid: 36ae37d84d62b224db1fb90bcb0293d9, type: 3}
+    - {fileID: 6311454542148068465, guid: 36ae37d84d62b224db1fb90bcb0293d9, type: 3}
+    - {fileID: 6311454542148068465, guid: 36ae37d84d62b224db1fb90bcb0293d9, type: 3}
+    - {fileID: 6311454542148068465, guid: 36ae37d84d62b224db1fb90bcb0293d9, type: 3}
+    - {fileID: 6311454542148068465, guid: 36ae37d84d62b224db1fb90bcb0293d9, type: 3}
+    - {fileID: 6311454542148068465, guid: 36ae37d84d62b224db1fb90bcb0293d9, type: 3}
+    - {fileID: 6311454542148068465, guid: 36ae37d84d62b224db1fb90bcb0293d9, type: 3}
+    - {fileID: 6311454542148068465, guid: 36ae37d84d62b224db1fb90bcb0293d9, type: 3}
+    - {fileID: 6311454542148068465, guid: 36ae37d84d62b224db1fb90bcb0293d9, type: 3}
+    - {fileID: 6311454542148068465, guid: 36ae37d84d62b224db1fb90bcb0293d9, type: 3}
+    - {fileID: 6311454542148068465, guid: 36ae37d84d62b224db1fb90bcb0293d9, type: 3}
+    - {fileID: 6311454542148068465, guid: 36ae37d84d62b224db1fb90bcb0293d9, type: 3}
+    pos: {x: 13, y: 6.5}
+    posDelta: {x: 0, y: -1.2}
+    delay: 2
+  - bulletSpawnerPrefabs:
+    - {fileID: 6311454542148068465, guid: 2ca7d154222a93948a3439c0f46ecdcc, type: 3}
+    - {fileID: 6311454542148068465, guid: 2ca7d154222a93948a3439c0f46ecdcc, type: 3}
+    - {fileID: 6311454542148068465, guid: 2ca7d154222a93948a3439c0f46ecdcc, type: 3}
+    - {fileID: 6311454542148068465, guid: 2ca7d154222a93948a3439c0f46ecdcc, type: 3}
+    - {fileID: 6311454542148068465, guid: 2ca7d154222a93948a3439c0f46ecdcc, type: 3}
+    - {fileID: 6311454542148068465, guid: 2ca7d154222a93948a3439c0f46ecdcc, type: 3}
+    - {fileID: 6311454542148068465, guid: 2ca7d154222a93948a3439c0f46ecdcc, type: 3}
+    - {fileID: 6311454542148068465, guid: 2ca7d154222a93948a3439c0f46ecdcc, type: 3}
+    - {fileID: 6311454542148068465, guid: 2ca7d154222a93948a3439c0f46ecdcc, type: 3}
+    - {fileID: 6311454542148068465, guid: 2ca7d154222a93948a3439c0f46ecdcc, type: 3}
+    - {fileID: 6311454542148068465, guid: 2ca7d154222a93948a3439c0f46ecdcc, type: 3}
+    - {fileID: 6311454542148068465, guid: 2ca7d154222a93948a3439c0f46ecdcc, type: 3}
+    pos: {x: -13, y: 6.5}
+    posDelta: {x: 0, y: -1.2}
+    delay: 2
+  difficulty: 1

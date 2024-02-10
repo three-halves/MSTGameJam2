@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b921f1f94192464da5919fc9f8c3d27, type: 3}
+  m_Name: TargetedQuads
+  m_EditorClassIdentifier: 
+  nodes:
+  - bulletSpawnerPrefabs:
+    - {fileID: 6311454542148068465, guid: 374939647a45a9840bf91cf1b4f401e6, type: 3}
+    pos: {x: 2.5, y: 2.5}
+    posDelta: {x: 0, y: 0}
+    delay: 1
+    addAngle: 0
+    randomPosOverride: 0
+    randomAngleOverride: 0
+    centerAtPlayer: 1
+  - bulletSpawnerPrefabs:
+    - {fileID: 6311454542148068465, guid: 374939647a45a9840bf91cf1b4f401e6, type: 3}
+    pos: {x: 2.5, y: -2.5}
+    posDelta: {x: 0, y: 0}
+    delay: 1
+    addAngle: 0
+    randomPosOverride: 0
+    randomAngleOverride: 0
+    centerAtPlayer: 1
+  - bulletSpawnerPrefabs:
+    - {fileID: 6311454542148068465, guid: 374939647a45a9840bf91cf1b4f401e6, type: 3}
+    pos: {x: -2.5, y: -2.5}
+    posDelta: {x: 0, y: 0}
+    delay: 1
+    addAngle: 0
+    randomPosOverride: 0
+    randomAngleOverride: 0
+    centerAtPlayer: 1
+  - bulletSpawnerPrefabs:
+    - {fileID: 6311454542148068465, guid: 374939647a45a9840bf91cf1b4f401e6, type: 3}
+    pos: {x: -2.5, y: 2.5}
+    posDelta: {x: 0, y: 0}
+    delay: 1
+    addAngle: 0
+    randomPosOverride: 0
+    randomAngleOverride: 0
+    centerAtPlayer: 1
+  difficulty: 1
