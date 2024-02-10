@@ -51,6 +51,10 @@ MonoBehaviour:
   lifeTime: 4.25
   sr: {fileID: 1184168554166449948}
   bulletPrefab: {fileID: 2408835187266845733, guid: 9c717a65d778d844eac1dc5b6a4c4613, type: 3}
+  scorePrefab: {fileID: 5778997648279837254, guid: 408b58b864ca4a244a78e7984403ea11, type: 3}
+  scoreSprites:
+  - {fileID: 21300000, guid: 846ad65ff14448447bf8c8a093d079f6, type: 3}
+  - {fileID: 21300000, guid: a77a5413548c2c543bef723942c9605b, type: 3}
 --- !u!58 &6720087328218758553
 CircleCollider2D:
   m_ObjectHideFlags: 0

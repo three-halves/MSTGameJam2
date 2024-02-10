@@ -23,7 +23,6 @@ public class ImageColorChange : MonoBehaviour
         c.r = Nsin((float)(Time.time * speed + offset)) * 0.5f + 0.5f;
         c.b = Nsin((float)(Time.time * speed + offset + Math.PI / 2)) * 0.5f + 0.5f;
         c.g = Nsin((float)(Time.time * speed + offset + Math.PI)) * 0.5f + 0.5f;
-        Debug.Log(c);
 
         image.color = c;
     }

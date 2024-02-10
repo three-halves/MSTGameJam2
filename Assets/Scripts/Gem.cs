@@ -7,6 +7,8 @@ public class Gem : MonoBehaviour
     [SerializeField] public float lifeTime = 4f;
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject scorePrefab;
+    [SerializeField] private Sprite[] scoreSprites;
 
     private float refTime;
     // Start is called before the first frame update
@@ -24,6 +26,7 @@ public class Gem : MonoBehaviour
             // newBullet.isHoming = true;
             refTime = Time.time;
             GameObject.Find("PlayerContainer").GetComponent<Player>().score += 8;
+            Instantiate(scorePrefab, transform.position, transform.rotation).transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = scoreSprites[1];
             Destroy(gameObject);
 
         }
@@ -38,6 +41,7 @@ public class Gem : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject.Find("PlayerContainer").GetComponent<Player>().score += 2;
+        Instantiate(scorePrefab, transform.position, transform.rotation).transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = scoreSprites[0];
         Destroy(gameObject);
     }
 }
