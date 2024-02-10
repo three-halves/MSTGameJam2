@@ -32,6 +32,7 @@ public class WaveManager : MonoBehaviour
 
     void SpawnWave()
     {
+        GameObject.Find("PlayerContainer").GetComponent<Player>().score += 1;
         Wave wave = waves[Random.Range(0, waves.Length)];
 
         foreach (WaveNode w in wave.nodes)

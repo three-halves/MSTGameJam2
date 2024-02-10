@@ -20,7 +20,7 @@ public class Shake : MonoBehaviour
     {
         if (shakeTimer - Time.time > 0) 
         {
-            Debug.Log("shake " + transform.localPosition);
+            // Debug.Log("shake " + transform.localPosition);
             addPos = new Vector2(Random.Range(0f, amplitude), Random.Range(0f, amplitude));
             transform.localPosition = startPos + addPos;
         }

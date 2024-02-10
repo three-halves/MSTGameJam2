@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using TMPro;
 
 
 public class PostGameWindow : MonoBehaviour
 {
     [SerializeField] GameObject postGameWindow;
+    [SerializeField] TMP_Text scoreText;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,5 +27,6 @@ public class PostGameWindow : MonoBehaviour
         Time.timeScale = 0f;
         postGameWindow.SetActive(true);
         EventSystem.current.SetSelectedGameObject(postGameWindow.transform.GetChild(0).gameObject);
+        scoreText.text = "score: " + GameObject.Find("PlayerContainer").GetComponent<Player>().score;
     }
 }

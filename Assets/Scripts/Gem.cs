@@ -23,6 +23,7 @@ public class Gem : MonoBehaviour
             Bullet newBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity).GetComponent<Bullet>();
             // newBullet.isHoming = true;
             refTime = Time.time;
+            GameObject.Find("PlayerContainer").GetComponent<Player>().score += 8;
             Destroy(gameObject);
 
         }
@@ -36,6 +37,7 @@ public class Gem : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        GameObject.Find("PlayerContainer").GetComponent<Player>().score += 2;
         Destroy(gameObject);
     }
 }

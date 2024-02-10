@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Shake shake;
 
+    public int score;
+
     // Start is called before the first frame update
     void Start()
     {
