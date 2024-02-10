@@ -104,7 +104,7 @@ public class Player : MonoBehaviour
         hpDisp.timeSinceHit = Time.time;
         intangibleTime = 1f;
         shake.StartShake(0.3f, 0.3f);
-        score /= 2;
+        score = (int)Mathf.Ceil(score * 0.75f);
 
         if (hpDisp.hp <= 0) Death();
         return true;
