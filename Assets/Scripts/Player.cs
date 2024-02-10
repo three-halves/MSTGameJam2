@@ -35,7 +35,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Shake shake;
 
-    public int score;
+    public int score = 0;
+    public float timeSurvived = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +63,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        timeSurvived += Time.deltaTime;
+
         if (curDashTime <= 0)
         {
             moveDelta.y = Input.GetAxisRaw("Vertical");
@@ -100,6 +104,7 @@ public class Player : MonoBehaviour
         hpDisp.timeSinceHit = Time.time;
         intangibleTime = 1f;
         shake.StartShake(0.3f, 0.3f);
+        score /= 2;
 
         if (hpDisp.hp <= 0) Death();
         return true;

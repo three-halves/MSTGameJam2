@@ -25,8 +25,10 @@ public class PostGameWindow : MonoBehaviour
     public void StartPostGame()
     {
         Time.timeScale = 0f;
+        float timeSurvived = GameObject.Find("PlayerContainer").GetComponent<Player>().timeSurvived;
+        int score =  GameObject.Find("PlayerContainer").GetComponent<Player>().score;
         postGameWindow.SetActive(true);
         EventSystem.current.SetSelectedGameObject(postGameWindow.transform.GetChild(0).gameObject);
-        scoreText.text = "score: " + GameObject.Find("PlayerContainer").GetComponent<Player>().score;
+        scoreText.text = string.Format("score: {0} \n time: {1}m {2}s \n scoretime efficiency: {3} \n", score, Mathf.Floor(timeSurvived / 60), Mathf.Floor(timeSurvived % 60), score/timeSurvived);
     }
 }
