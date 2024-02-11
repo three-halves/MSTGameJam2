@@ -55,6 +55,8 @@ MonoBehaviour:
   scoreSprites:
   - {fileID: 21300000, guid: 846ad65ff14448447bf8c8a093d079f6, type: 3}
   - {fileID: 21300000, guid: a77a5413548c2c543bef723942c9605b, type: 3}
+  collectSFX: {fileID: 2178486454312208720, guid: 82d0e6a0d8d0a8943ac9fd5e5bc2352f, type: 3}
+  angerSFX: {fileID: 2178486454312208720, guid: ff857fb2d7c2e734e8c0959b697ba409, type: 3}
 --- !u!58 &6720087328218758553
 CircleCollider2D:
   m_ObjectHideFlags: 0

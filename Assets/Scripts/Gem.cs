@@ -10,6 +10,9 @@ public class Gem : MonoBehaviour
     [SerializeField] private GameObject scorePrefab;
     [SerializeField] private Sprite[] scoreSprites;
 
+    [SerializeField] private GameObject collectSFX;
+    [SerializeField] private GameObject angerSFX;
+
     private float refTime;
     // Start is called before the first frame update
     void Start()
@@ -27,6 +30,7 @@ public class Gem : MonoBehaviour
             refTime = Time.time;
             GameObject.Find("PlayerContainer").GetComponent<Player>().score += 8;
             Instantiate(scorePrefab, transform.position, transform.rotation).transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = scoreSprites[1];
+            Instantiate(angerSFX);
             Destroy(gameObject);
 
         }
@@ -42,6 +46,7 @@ public class Gem : MonoBehaviour
     {
         GameObject.Find("PlayerContainer").GetComponent<Player>().score += 2;
         Instantiate(scorePrefab, transform.position, transform.rotation).transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = scoreSprites[0];
+        Instantiate(collectSFX);
         Destroy(gameObject);
     }
 }

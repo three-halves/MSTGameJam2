@@ -7,6 +7,10 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private Wave[] waves;
     [SerializeField] private float delayBetweenWaves = 4f;
 
+    [SerializeField] private AudioClip bulletSpawnSFX;
+
+    [SerializeField] private GameObject audioObject;
+
     float timeRef;
     
     // Start is called before the first frame update
@@ -53,6 +57,7 @@ public class WaveManager : MonoBehaviour
                 newSpawner.spawnTime = w.delay;
                 if (w.randomAngleOverride) w.addAngle = Random.Range(0f, 360f);
                 newSpawner.addAngle = w.addAngle;
+                newSpawner.audioObject = audioObject;
             }
             
         }

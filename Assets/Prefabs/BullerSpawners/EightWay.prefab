@@ -71,6 +71,7 @@ MonoBehaviour:
   lineRenderPrefab: {fileID: 3411570040936046326, guid: 7d07ac9963f9a0740a13c99ccd92a80a, type: 3}
   bulletPrefab: {fileID: 2408835187266845733, guid: ea24177cd6441f74686a7c390afff4a8, type: 3}
   addAngle: 0
+  bulletSpawnSFX: {fileID: 8300000, guid: a79aade8c99590b46b5c1ce6b3b7015c, type: 3}
 --- !u!1 &7471559305562857603
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,6 +22,8 @@ public class BulletSpawner : MonoBehaviour
     // passed from WaveManager
     public float addAngle = 0f;
 
+    public GameObject audioObject;
+
     private float refTime;
     // Start is called before the first frame update
     void Start()
@@ -74,6 +76,7 @@ public class BulletSpawner : MonoBehaviour
             newBullet.vel = v;
             newBullet.gameObject.transform.position = transform.position;
         }
+        Instantiate(audioObject);
         Destroy(gameObject);
     }
 }

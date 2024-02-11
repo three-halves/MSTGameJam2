@@ -38,6 +38,10 @@ public class Player : MonoBehaviour
     public int score = 0;
     public float timeSurvived = 0;
 
+    [SerializeField] GameObject dashSFX;
+    [SerializeField] GameObject stepSFX;
+    [SerializeField] GameObject hurtSFX;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,6 +81,7 @@ public class Player : MonoBehaviour
             curDashTime = dashTime;
             intangibleTime = dashTime;
             dashMoveDelta = moveDelta.normalized;
+            Instantiate(dashSFX);
         }
 
         intangible = (intangibleTime > 0);
@@ -105,6 +110,7 @@ public class Player : MonoBehaviour
         intangibleTime = 1f;
         shake.StartShake(0.3f, 0.3f);
         score = (int)Mathf.Ceil(score * 0.75f);
+        Instantiate(hurtSFX);
 
         if (hpDisp.hp <= 0) Death();
         return true;
