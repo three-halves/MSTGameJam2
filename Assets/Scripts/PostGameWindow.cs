@@ -28,7 +28,14 @@ public class PostGameWindow : MonoBehaviour
         float timeSurvived = GameObject.Find("PlayerContainer").GetComponent<Player>().timeSurvived;
         int score =  GameObject.Find("PlayerContainer").GetComponent<Player>().score;
         postGameWindow.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(postGameWindow.transform.GetChild(1).gameObject);
+        StartCoroutine(SelectRetry());
         scoreText.text = string.Format("score: {0} \n time: {1}m {2}s \n scoretime efficiency: {3} \n", score, Mathf.Floor(timeSurvived / 60), Mathf.Floor(timeSurvived % 60), score/timeSurvived);
+    }
+
+    IEnumerator SelectRetry()
+    {
+        Debug.Log("Ran");
+        yield return new WaitForSecondsRealtime(1f);
+        EventSystem.current.SetSelectedGameObject(postGameWindow.transform.GetChild(1).gameObject);
     }
 }
