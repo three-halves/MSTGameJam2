@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rend = GetComponent<Renderer>();
 
-        GetComponent<SpriteRenderer>().sprite = sprites[Random.Range(0, (sprites.Length - 1))];
+        GetComponent<SpriteRenderer>().sprite = sprites[Random.Range(0, sprites.Length)];
         transform.Rotate(new Vector3(0f, 0f, Random.Range(0f, 360f)));
         refTime = Time.time;
     }
