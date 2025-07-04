@@ -52,12 +52,10 @@ public class Bullet : MonoBehaviour
             Transform playerTransform = GameObject.Find("PlayerContainer").transform;
             Vector2 playerPos = playerTransform.position;
             // rotate toward player for a set duration
-            if (Time.time - refTime < homingLifetime)
-            {
-                float theta = Mathf.Atan2(playerPos.y - transform.position.y, playerPos.x - transform.position.x);
-                accel = new Vector2(homingSpeed * Mathf.Cos(theta), homingSpeed * Mathf.Sin(theta));
-                transform.rotation = Quaternion.Euler(0,0, Mathf.Atan2(playerPos.y - transform.position.y, playerPos.x - transform.position.x) * Mathf.Rad2Deg);
-            }
+            if (Time.time - refTime > homingLifetime) isHoming = false;
+            float theta = Mathf.Atan2(playerPos.y - transform.position.y, playerPos.x - transform.position.x);
+            accel = new Vector2(homingSpeed * Mathf.Cos(theta), homingSpeed * Mathf.Sin(theta));
+            transform.rotation = Quaternion.Euler(0,0, Mathf.Atan2(playerPos.y - transform.position.y, playerPos.x - transform.position.x) * Mathf.Rad2Deg);
         }
     }
 
