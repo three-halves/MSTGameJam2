@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour
     {
         vel += accel;
         if (isHoming) vel *= 0.97f;
-        rb.velocity = vel;
+        rb.linearVelocity = vel;
     }
 
     // Update is called once per frame

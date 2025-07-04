@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector2 v = rb.velocity;
+        Vector2 v = rb.linearVelocity;
 
         v = moveDelta * moveSpd;
 
@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
             // temp
         }
 
-        rb.velocity = v;
+        rb.linearVelocity = v;
     }
 
     // Update is called once per frame
