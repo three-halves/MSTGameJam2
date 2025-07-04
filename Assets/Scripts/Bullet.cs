@@ -14,8 +14,11 @@ public class Bullet : MonoBehaviour
 
     public bool isHoming = false;
     private float homingSpeed = 0.8f;
+    private float homingLifetime = 5f;
 
     [SerializeField] private Sprite[] sprites;
+
+    private float refTime;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +28,7 @@ public class Bullet : MonoBehaviour
 
         GetComponent<SpriteRenderer>().sprite = sprites[Random.Range(0, (sprites.Length - 1))];
         transform.Rotate(new Vector3(0f, 0f, Random.Range(0f, 360f)));
+        refTime = Time.time;
     }
 
     void FixedUpdate()
@@ -47,9 +51,13 @@ public class Bullet : MonoBehaviour
         {
             Transform playerTransform = GameObject.Find("PlayerContainer").transform;
             Vector2 playerPos = playerTransform.position;
-            float theta = Mathf.Atan2(playerPos.y - transform.position.y, playerPos.x - transform.position.x);
-            accel = new Vector2(homingSpeed * Mathf.Cos(theta), homingSpeed * Mathf.Sin(theta));
-            transform.rotation = Quaternion.Euler(0,0, Mathf.Atan2(playerPos.y - transform.position.y, playerPos.x - transform.position.x) * Mathf.Rad2Deg);
+            // rotate toward player for a set duration
+            if (Time.time - refTime < homingLifetime)
+            {
+                float theta = Mathf.Atan2(playerPos.y - transform.position.y, playerPos.x - transform.position.x);
+                accel = new Vector2(homingSpeed * Mathf.Cos(theta), homingSpeed * Mathf.Sin(theta));
+                transform.rotation = Quaternion.Euler(0,0, Mathf.Atan2(playerPos.y - transform.position.y, playerPos.x - transform.position.x) * Mathf.Rad2Deg);
+            }
         }
     }
 

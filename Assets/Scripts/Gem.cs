@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gem : MonoBehaviour
 {
-    [SerializeField] public float lifeTime = 4f;
+    [SerializeField] public float lifeTime = 5f;
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private GameObject scorePrefab;
@@ -37,7 +37,7 @@ public class Gem : MonoBehaviour
         else if ((lifeTime - (Time.time - refTime)) <= 1.5)
         {
             Color c = sr.color;
-            c.a = 1f - (Mathf.Ceil(Time.time * 6) % 2) * 0.75f;
+            c.a = 1f - Mathf.Ceil(Time.time * 6) % 2 * 0.75f;
             sr.color = c;
         }
     }
