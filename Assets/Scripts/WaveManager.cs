@@ -9,7 +9,8 @@ public class WaveManager : MonoBehaviour
 
     [SerializeField] private AudioClip bulletSpawnSFX;
 
-    [SerializeField] private GameObject audioObject;
+    [SerializeField] private GameObject spawnSFX;
+    [SerializeField] private GameObject altSpawnSFX;
 
     float timeRef;
     public int waveCount = 0;
@@ -63,7 +64,7 @@ public class WaveManager : MonoBehaviour
                 newSpawner.spawnTime = w.delay;
                 if (w.randomAngleOverride) w.addAngle = Random.Range(0f, 360f);
                 newSpawner.addAngle = w.addAngle;
-                newSpawner.audioObject = audioObject;
+                newSpawner.audioObject = Random.Range(0, 2) == 0 ? spawnSFX : altSpawnSFX;
                 
                 // Don't overlap sfx
                 newSpawner.silent = newSpawner.spawnTime == lastSpawnTime;

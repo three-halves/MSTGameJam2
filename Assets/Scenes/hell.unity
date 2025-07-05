@@ -1167,7 +1167,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 74c3810612a205e4c85ef40247ea4362, type: 2}
   delayBetweenWaves: 3.5
   bulletSpawnSFX: {fileID: 8300000, guid: a79aade8c99590b46b5c1ce6b3b7015c, type: 3}
-  audioObject: {fileID: 2178486454312208720, guid: 269a3cd104a5f1d44b69b3a9b539e960, type: 3}
+  spawnSFX: {fileID: 0}
+  altSpawnSFX: {fileID: 0}
   waveCount: 0
 --- !u!4 &715913563
 Transform:
@@ -8188,7 +8189,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3a9091c9507f5ca4180bb58bdacaed4b, type: 2}
   delayBetweenWaves: 3.5
   bulletSpawnSFX: {fileID: 8300000, guid: a79aade8c99590b46b5c1ce6b3b7015c, type: 3}
-  audioObject: {fileID: 2178486454312208720, guid: 269a3cd104a5f1d44b69b3a9b539e960, type: 3}
+  spawnSFX: {fileID: 2178486454312208720, guid: 269a3cd104a5f1d44b69b3a9b539e960, type: 3}
+  altSpawnSFX: {fileID: 2178486454312208720, guid: 9b96fd03e95258540a9f3a88fe13bb0e, type: 3}
   waveCount: 0
 --- !u!4 &2093618460
 Transform:
