@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject hurtSFX;
     [SerializeField] GameObject deathSFX;
 
+    [SerializeField] TMPro.TMP_Text scoreText;
+
     private SpriteRenderer playerHeadSR;
 
     // Start is called before the first frame update
@@ -96,6 +98,8 @@ public class Player : MonoBehaviour
 
         intangibleTime -= Time.deltaTime;
         hitThisFrame = false;
+
+        scoreText.text = score.ToString();
     }
 
     public bool Hurt(bool ignoresIntangible = false)
@@ -122,6 +126,7 @@ public class Player : MonoBehaviour
     private void Death()
     {
         playerHeadSR.color = Color.clear;
+        scoreText.text = "";
         moveDelta = Vector2.zero;
         animator.SetBool("Walk", false);
         deathParicles.Play();
