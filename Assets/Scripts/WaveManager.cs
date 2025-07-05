@@ -12,11 +12,13 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private GameObject audioObject;
 
     float timeRef;
+    public int waveCount = 0;
     
     // Start is called before the first frame update
     void Start()
     {
         timeRef = Time.time;
+        waveCount = 0;
     }
 
     // Update is called once per frame
@@ -36,6 +38,7 @@ public class WaveManager : MonoBehaviour
 
     void SpawnWave()
     {
+        waveCount++;
         GameObject.Find("PlayerContainer").GetComponent<Player>().score += 1;
         Wave wave = waves[Random.Range(0, waves.Length)];
 
