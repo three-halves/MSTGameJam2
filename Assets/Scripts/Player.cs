@@ -84,6 +84,9 @@ public class Player : MonoBehaviour
             Instantiate(dashSFX);
         }
 
+        // step sound
+        // if (Mathf.Floor(Time.time) % 2 == 0 && moveDelta != Vector2.zero) Instantiate(stepSFX);
+
         intangible = intangibleTime > 0;
         curDashTime -= Time.deltaTime;
 

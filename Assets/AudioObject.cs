@@ -5,6 +5,7 @@ using UnityEngine;
 public class AudioObject : MonoBehaviour
 {
     private AudioSource audioSource;
+    [SerializeField] private bool destroyOnPlay = true;
     [SerializeField] Vector2 pitchRange;
 
     void Start()
@@ -13,8 +14,15 @@ public class AudioObject : MonoBehaviour
         audioSource.pitch = Random.Range(pitchRange.x, pitchRange.y);
     }
 
+    public void Play(float pitch)
+    {
+        if (pitch <= 0) audioSource.pitch = Random.Range(pitchRange.x, pitchRange.y);
+        else audioSource.pitch = pitch;
+        audioSource.Play();
+    }
+
     void Update()
     {
-        if (!audioSource.isPlaying) Destroy(gameObject);
+        if (!audioSource.isPlaying && destroyOnPlay) Destroy(gameObject);
     }
 }

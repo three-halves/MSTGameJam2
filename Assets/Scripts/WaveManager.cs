@@ -44,6 +44,7 @@ public class WaveManager : MonoBehaviour
 
         foreach (WaveNode w in wave.nodes)
         {
+            float lastSpawnTime = -1;
             for (int i = 0; i < w.bulletSpawnerPrefabs.Length; i++)
             {
                 // spawn bullet spawners
@@ -63,6 +64,10 @@ public class WaveManager : MonoBehaviour
                 if (w.randomAngleOverride) w.addAngle = Random.Range(0f, 360f);
                 newSpawner.addAngle = w.addAngle;
                 newSpawner.audioObject = audioObject;
+                
+                // Don't overlap sfx
+                newSpawner.silent = newSpawner.spawnTime == lastSpawnTime;
+                lastSpawnTime = newSpawner.spawnTime;
             }
             
         }

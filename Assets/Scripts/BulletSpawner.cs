@@ -25,6 +25,8 @@ public class BulletSpawner : MonoBehaviour
     public GameObject audioObject;
 
     private float refTime;
+
+    public bool silent = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -76,7 +78,7 @@ public class BulletSpawner : MonoBehaviour
             newBullet.vel = v;
             newBullet.gameObject.transform.position = transform.position;
         }
-        Instantiate(audioObject);
+        if (!silent) Instantiate(audioObject);
         Destroy(gameObject);
     }
 }
