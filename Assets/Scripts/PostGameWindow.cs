@@ -22,8 +22,9 @@ public class PostGameWindow : MonoBehaviour
         SceneManager.LoadScene(s);
     }
 
-    public void StartPostGame()
+    public IEnumerator StartPostGame()
     {
+        yield return new WaitForSeconds(1f);
         Time.timeScale = 0f;
         float timeSurvived = GameObject.Find("PlayerContainer").GetComponent<Player>().timeSurvived;
         int score =  GameObject.Find("PlayerContainer").GetComponent<Player>().score;
@@ -32,9 +33,8 @@ public class PostGameWindow : MonoBehaviour
         scoreText.text = string.Format("score: {0} \n time: {1}m {2}s \n scoretime efficiency: {3} \n", score, Mathf.Floor(timeSurvived / 60), Mathf.Floor(timeSurvived % 60), score/timeSurvived);
     }
 
-    IEnumerator SelectRetry()
+    private IEnumerator SelectRetry()
     {
-        Debug.Log("Ran");
         yield return new WaitForSecondsRealtime(1f);
         EventSystem.current.SetSelectedGameObject(postGameWindow.transform.GetChild(1).gameObject);
     }

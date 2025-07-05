@@ -5,12 +5,6 @@ using UnityEngine.Animations;
 
 public class Player : MonoBehaviour
 {
-
-    [SerializeField] private KeyCode Up;
-    [SerializeField] private KeyCode Down;
-    [SerializeField] private KeyCode Left;
-    [SerializeField] private KeyCode Right;
-
     private Vector2 moveDelta = new Vector2();
     private Rigidbody2D rb;
 
@@ -32,6 +26,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Animator animator;
     [SerializeField] private Transform playerVisual;
+    [SerializeField] private ParticleSystem deathParicles;
 
     [SerializeField] private Shake shake;
 
@@ -41,12 +36,16 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject dashSFX;
     [SerializeField] GameObject stepSFX;
     [SerializeField] GameObject hurtSFX;
+    [SerializeField] GameObject deathSFX;
+
+    private SpriteRenderer playerHeadSR;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         startingScale = playerVisual.localScale;
+        playerHeadSR = playerVisual.transform.GetChild(2).GetComponent<SpriteRenderer>();
     }
 
     void FixedUpdate()
@@ -58,7 +57,6 @@ public class Player : MonoBehaviour
         if (curDashTime > 0)
         {
             v = dashMoveDelta * dashSpd;
-            // temp
         }
 
         rb.linearVelocity = v;
@@ -67,7 +65,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (hpDisp.hp == 0) return;
         timeSurvived += Time.deltaTime;
 
         if (curDashTime <= 0)
@@ -84,12 +82,12 @@ public class Player : MonoBehaviour
             Instantiate(dashSFX);
         }
 
-        intangible = (intangibleTime > 0);
+        intangible = intangibleTime > 0;
         curDashTime -= Time.deltaTime;
 
         // temp for debug
-        if (intangible) playerVisual.transform.GetChild(2).GetComponent<SpriteRenderer>().color = Color.green;
-        else playerVisual.transform.GetChild(2).GetComponent<SpriteRenderer>().color = Color.white;
+        if (intangible) playerHeadSR.color = Color.green;
+        else playerHeadSR.color = Color.white;
 
         // update player visuals and animations
         if (moveDelta.x != 0) playerVisual.transform.localScale = new Vector3((moveDelta.x > 0) ? startingScale.x : -startingScale.x, startingScale.y, startingScale.z);
@@ -107,19 +105,27 @@ public class Player : MonoBehaviour
         hpDisp.hp -= 1;
         hpDisp.hpObjects[hpDisp.hp].SetActive(false);
         hpDisp.timeSinceHit = Time.time;
+        if (hpDisp.hp <= 0) 
+        {
+            Death();
+            return true;
+        }
+
         intangibleTime = 1f;
         shake.StartShake(0.3f, 0.3f);
         score = (int)Mathf.Ceil(score * 0.75f);
         Instantiate(hurtSFX);
 
-        if (hpDisp.hp <= 0) Death();
         return true;
     }
 
     private void Death()
     {
-        Debug.Log("dead");
-        // SceneManager.LoadScene("hell");
-        GameObject.Find("PostGameParent").GetComponent<PostGameWindow>().StartPostGame();
+        playerHeadSR.color = Color.clear;
+        moveDelta = Vector2.zero;
+        animator.SetBool("Walk", false);
+        deathParicles.Play();
+        Instantiate(deathSFX);
+        StartCoroutine(GameObject.Find("PostGameParent").GetComponent<PostGameWindow>().StartPostGame());
     }
 }
