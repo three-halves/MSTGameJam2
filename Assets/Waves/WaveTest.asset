@@ -14,11 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - bulletSpawnerPrefabs:
-    - {fileID: 6311454542148068465, guid: 8456eef0fe040744c9326e47a2ff36ad, type: 3}
-    - {fileID: 6311454542148068465, guid: 8456eef0fe040744c9326e47a2ff36ad, type: 3}
-    - {fileID: 6311454542148068465, guid: 8456eef0fe040744c9326e47a2ff36ad, type: 3}
-    - {fileID: 6311454542148068465, guid: 8456eef0fe040744c9326e47a2ff36ad, type: 3}
-    - {fileID: 6311454542148068465, guid: 8456eef0fe040744c9326e47a2ff36ad, type: 3}
+    - {fileID: 5956900929120088412, guid: c352ebfe45d8156469389fcca68c7ac2, type: 3}
+    - {fileID: 5956900929120088412, guid: c352ebfe45d8156469389fcca68c7ac2, type: 3}
+    - {fileID: 5956900929120088412, guid: c352ebfe45d8156469389fcca68c7ac2, type: 3}
+    - {fileID: 5956900929120088412, guid: c352ebfe45d8156469389fcca68c7ac2, type: 3}
+    - {fileID: 5956900929120088412, guid: c352ebfe45d8156469389fcca68c7ac2, type: 3}
     pos: {x: 0, y: 0}
-    posDelta: {x: 0, y: 1}
+    posDelta: {x: 1, y: 1}
+    delay: 1
+    addAngle: 0
+    randomPosOverride: 0
+    randomAngleOverride: 0
+    centerAtPlayer: 0
   difficulty: 1

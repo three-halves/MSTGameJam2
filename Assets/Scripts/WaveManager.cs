@@ -44,16 +44,18 @@ public class WaveManager : MonoBehaviour
             for (int i = 0; i < w.bulletSpawnerPrefabs.Length; i++)
             {
                 // spawn bullet spawners
-                Vector2 posOrigin = (w.centerAtPlayer) ? GameObject.Find("PlayerContainer").transform.position : Vector2.zero;
-                BulletSpawner newSpawner = Instantiate(w.bulletSpawnerPrefabs[i]).GetComponent<BulletSpawner>();
+                Vector2 posOrigin = w.centerAtPlayer ? GameObject.Find("PlayerContainer").transform.position : Vector2.zero;
+                GameObject newSpawnerObject = Instantiate(w.bulletSpawnerPrefabs[i]);
+                BulletSpawner newSpawner = newSpawnerObject.GetComponent<BulletSpawner>();
                 if (!w.randomPosOverride)
                 {
-                    newSpawner.gameObject.transform.position = posOrigin + (w.pos + w.posDelta * i);
+                    newSpawnerObject.transform.position = posOrigin + (w.pos + w.posDelta * i);
                 }
                 else
                 {
-                    newSpawner.gameObject.transform.position = posOrigin + (new Vector2(Random.Range(-13f, 13f), Random.Range(-6.5f, 6.5f)));
+                    newSpawnerObject.transform.position = posOrigin + new Vector2(Random.Range(-13f, 13f), Random.Range(-6.5f, 6.5f));
                 }
+                if (!newSpawner) continue;
                 newSpawner.spawnTime = w.delay;
                 if (w.randomAngleOverride) w.addAngle = Random.Range(0f, 360f);
                 newSpawner.addAngle = w.addAngle;
