@@ -656,7 +656,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.28235295, g: 0.2509804, b: 0.2509804, a: 1}
   m_FlipX: 0
@@ -790,7 +790,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.28235295, g: 0.2509804, b: 0.2509804, a: 1}
   m_FlipX: 0
@@ -1164,11 +1164,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
-  - {fileID: 11400000, guid: 74c3810612a205e4c85ef40247ea4362, type: 2}
+  - {fileID: 11400000, guid: c736ea92ef3de8844a724e59d0b11d78, type: 2}
+  - {fileID: 11400000, guid: b466cab0c3724a8498f20abc19cf06c8, type: 2}
   delayBetweenWaves: 3.5
   bulletSpawnSFX: {fileID: 8300000, guid: a79aade8c99590b46b5c1ce6b3b7015c, type: 3}
-  spawnSFX: {fileID: 0}
-  altSpawnSFX: {fileID: 0}
+  spawnSFX: {fileID: 2178486454312208720, guid: 269a3cd104a5f1d44b69b3a9b539e960, type: 3}
+  altSpawnSFX: {fileID: 2178486454312208720, guid: 9b96fd03e95258540a9f3a88fe13bb0e, type: 3}
   waveCount: 0
 --- !u!4 &715913563
 Transform:
@@ -2404,7 +2405,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.28235295, g: 0.2509804, b: 0.2509804, a: 1}
   m_FlipX: 0
@@ -8099,7 +8100,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.28235295, g: 0.2509804, b: 0.2509804, a: 1}
   m_FlipX: 0
@@ -8140,11 +8141,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 755794095}
   - {fileID: 1926294990}
   - {fileID: 389611917}
   - {fileID: 1333706166}
   - {fileID: 487798970}
+  - {fileID: 755794095}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2093618458
@@ -8187,6 +8188,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2c980fc7146d19041a3411926c2ab335, type: 2}
   - {fileID: 11400000, guid: 8604219bf0aa3634a80fd66b52ed89f3, type: 2}
   - {fileID: 11400000, guid: 3a9091c9507f5ca4180bb58bdacaed4b, type: 2}
+  - {fileID: 11400000, guid: c736ea92ef3de8844a724e59d0b11d78, type: 2}
+  - {fileID: 11400000, guid: b466cab0c3724a8498f20abc19cf06c8, type: 2}
   delayBetweenWaves: 3.5
   bulletSpawnSFX: {fileID: 8300000, guid: a79aade8c99590b46b5c1ce6b3b7015c, type: 3}
   spawnSFX: {fileID: 2178486454312208720, guid: 269a3cd104a5f1d44b69b3a9b539e960, type: 3}
