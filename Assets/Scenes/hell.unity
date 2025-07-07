@@ -807,10 +807,10 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: -10
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 8
   m_Depth: -1
   m_CullingMask:
@@ -991,15 +991,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpd: 0.12
-  maxSpd: 9
-  runSpd: 4
+  maxSpd: 0.18
+  runSpd: 0.4
   friction: 11
   rollSpd: 0.22
   airRollSpd: 0.29
   rollTime: 0.4
   gravity: 0.06
   rollingGravity: 0.043
-  jumpHeight: 0.57
+  jumpHeight: 0.59
   rollingJumpHeight: 0.4
   dashCooldown: 0.3
   hpDisp: {fileID: 1108174120}

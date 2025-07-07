@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
         }
 
         // jumping and gravity
-        delta.y = cc.velocity.y * Time.deltaTime;
+        delta.y = cc.velocity.y * Time.fixedDeltaTime;
         if (isJumping && cc.isGrounded)
         {
             delta.y = curDashTime <= 0 ? jumpHeight : rollingJumpHeight;
@@ -185,8 +185,8 @@ public class Player : MonoBehaviour
             return AddAcceleration(
                 inputDir,
                 currentVel,
-                runSpd,
-                maxSpd
+                runSpd / Time.fixedDeltaTime,
+                maxSpd / Time.fixedDeltaTime
                 );
         }
 
