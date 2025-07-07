@@ -1,17 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
     private Vector2 moveDelta = new Vector2();
-    private Rigidbody2D rb;
-
-
+    private CharacterController cc;
+    private bool isJumping = false;
+    private bool isRolling = false;
+    private bool rollHeld = false;
     [SerializeField] private float moveSpd;
-    [SerializeField] private float dashSpd;
-    [SerializeField] private float dashTime = 1f;
+    [SerializeField] private float maxSpd;
+    [SerializeField] private float runSpd;
+    [SerializeField] private float friction;
+    [SerializeField] private float rollSpd;
+    [SerializeField] private float airRollSpd;
+    [SerializeField] private float rollTime;
+    [SerializeField] private float gravity;
+    [SerializeField] private float rollingGravity;
+    [SerializeField] private float jumpHeight;
+    [SerializeField] private float rollingJumpHeight;
+    private bool groundedLastFrame = false;
     private Vector2 dashMoveDelta;
     private float curDashTime = 0f;
     [SerializeField] private float dashCooldown;
@@ -20,8 +32,9 @@ public class Player : MonoBehaviour
     [SerializeField] private HealthDisp hpDisp;
 
     private bool hitThisFrame = false;
-
     [SerializeField] SpriteRenderer[] playerSprites;
+    [SerializeField] private Sprite bootWalkSprite;
+    [SerializeField] private Sprite bootJumpSprite;
     private Vector3 startingScale;
 
     [SerializeField] private Animator animator;
@@ -45,23 +58,45 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        cc = GetComponent<CharacterController>();
         startingScale = playerVisual.localScale;
         playerHeadSR = playerVisual.transform.GetChild(2).GetComponent<SpriteRenderer>();
     }
 
     void FixedUpdate()
     {
-        Vector2 v = rb.linearVelocity;
+        // Lateral input direction
+        Vector3 v = new Vector3(moveDelta.x, 0, moveDelta.y).normalized;
+        // Amount we will move player at the end of tick
+        Vector3 delta = Vector3.zero;
 
-        v = moveDelta * moveSpd;
-
-        if (curDashTime > 0)
+        // running movement
+        if (rollHeld && !isRolling && curDashTime <= 0)
         {
-            v = dashMoveDelta * dashSpd;
+            // move player with acceleration
+            delta = GetMovementVector(v, cc.velocity);
+        }
+        // If not running, do basic walk/roll controls
+        else
+        {
+            delta = v * moveSpd;
+            if (curDashTime > 0)
+            {
+                delta = new Vector3(dashMoveDelta.x, 0, dashMoveDelta.y).normalized * (cc.isGrounded ? rollSpd : airRollSpd);
+            }
         }
 
-        rb.linearVelocity = v;
+        // jumping and gravity
+        delta.y = cc.velocity.y * Time.deltaTime;
+        if (isJumping && cc.isGrounded)
+        {
+            delta.y = curDashTime <= 0 ? jumpHeight : rollingJumpHeight;
+            isJumping = false;
+        }
+
+        delta.y -= curDashTime <= 0 ? gravity : rollingGravity;
+
+        cc.Move(delta);
     }
 
     // Update is called once per frame
@@ -70,25 +105,29 @@ public class Player : MonoBehaviour
         if (hpDisp.hp == 0) return;
         timeSurvived += Time.deltaTime;
 
-        if (curDashTime <= 0)
+        // start a roll
+        if (isRolling && curDashTime <= -dashCooldown && moveDelta != Vector2.zero)
         {
-            moveDelta.y = Input.GetAxisRaw("Vertical");
-            moveDelta.x = Input.GetAxisRaw("Horizontal");
-        }
-
-        if (Input.GetButton("Jump") && curDashTime <= -dashCooldown && moveDelta != Vector2.zero)
-        {
-            curDashTime = dashTime;
-            intangibleTime = dashTime;
+            curDashTime = rollTime;
+            intangibleTime = rollTime;
             dashMoveDelta = moveDelta.normalized;
+            isRolling = false;
             Instantiate(dashSFX);
         }
 
-        // step sound
-        // if (Mathf.Floor(Time.time) % 2 == 0 && moveDelta != Vector2.zero) Instantiate(stepSFX);
-
         intangible = intangibleTime > 0;
-        curDashTime -= Time.deltaTime;
+        // continue dash in air
+        if (cc.isGrounded) 
+        {
+            curDashTime -= Time.deltaTime;
+            intangibleTime -= Time.deltaTime;
+        }
+        // stop air dash on land
+        if (cc.isGrounded && !groundedLastFrame)
+        {
+            curDashTime = 0f;
+            intangibleTime = 0f;
+        }
 
         // temp for debug
         if (intangible) playerHeadSR.color = Color.green;
@@ -96,14 +135,60 @@ public class Player : MonoBehaviour
 
         // update player visuals and animations
         if (moveDelta.x != 0) playerVisual.transform.localScale = new Vector3((moveDelta.x > 0) ? startingScale.x : -startingScale.x, startingScale.y, startingScale.z);
-        animator.SetBool("Walk", (moveDelta != Vector2.zero) && curDashTime <= 0);
+        animator.SetBool("Walk", (moveDelta != Vector2.zero) && curDashTime <= 0 && cc.isGrounded && !rollHeld);
         animator.SetBool("Roll", curDashTime > 0);
+        animator.SetBool("Run", rollHeld && !isRolling && curDashTime <= 0 && (moveDelta != Vector2.zero));
+        animator.SetBool("InAir", !cc.isGrounded);
+        animator.SetFloat("YVel", cc.velocity.y);
 
-        intangibleTime -= Time.deltaTime;
+        // shoe sprite
+        Sprite s = cc.isGrounded ? bootWalkSprite : bootJumpSprite;
+        // shoe layer order
+        int o = (cc.isGrounded || curDashTime > 0) ? 1 : 3;
+        playerSprites[0].sprite = s;
+        playerSprites[1].sprite = s;
+        playerSprites[0].sortingOrder = o;
+        playerSprites[1].sortingOrder = o;
+
         hitThisFrame = false;
-
+        groundedLastFrame = cc.isGrounded;
         scoreText.text = score.ToString();
+
     }
+
+    private Vector3 AddAcceleration(Vector3 inputDir, Vector3 currentVel, float acceleration, float maxVel)
+    {
+        float projectedVel = Vector3.Dot(currentVel * Time.fixedDeltaTime, inputDir);
+        float accelVel = acceleration * Time.fixedDeltaTime;
+        maxVel *= Time.fixedDeltaTime;
+
+        // Cap max accel
+        if (projectedVel + accelVel > maxVel)
+        {
+            accelVel = maxVel - projectedVel;
+        }
+        
+        return currentVel * Time.fixedDeltaTime + inputDir * accelVel;
+    }
+
+    private Vector3 GetMovementVector(Vector3 inputDir, Vector3 currentVel)
+        {
+            // Apply friction
+            Vector3 lateralVel = Vector3.Scale(currentVel, new Vector3(1, 0, 1));
+            if (lateralVel.magnitude != 0)
+            {
+                float d = lateralVel.magnitude * friction * Time.fixedDeltaTime;
+                currentVel.x *= Mathf.Max(lateralVel.magnitude - d, 0) / lateralVel.magnitude;
+                currentVel.z *= Mathf.Max(lateralVel.magnitude - d, 0) / lateralVel.magnitude;
+            }
+
+            return AddAcceleration(
+                inputDir,
+                currentVel,
+                runSpd,
+                maxSpd
+                );
+        }
 
     public bool Hurt(bool ignoresIntangible = false)
     {
@@ -135,5 +220,21 @@ public class Player : MonoBehaviour
         deathParicles.Play();
         Instantiate(deathSFX);
         StartCoroutine(GameObject.Find("PostGameParent").GetComponent<PostGameWindow>().StartPostGame());
+    }
+
+    void OnMove(InputValue v)
+    {
+        moveDelta = v.Get<Vector2>();
+    }
+
+    void OnJump(InputValue v)
+    {
+        isJumping = v.isPressed;
+    }
+
+    void OnRoll(InputValue v)
+    {
+        isRolling = v.isPressed;
+        rollHeld = v.isPressed;
     }
 }

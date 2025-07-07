@@ -49,7 +49,7 @@ public class WaveManager : MonoBehaviour
             for (int i = 0; i < w.bulletSpawnerPrefabs.Length; i++)
             {
                 // spawn bullet spawners
-                Vector2 posOrigin = w.centerAtPlayer ? GameObject.Find("PlayerContainer").transform.position : Vector2.zero;
+                Vector2 posOrigin = w.centerAtPlayer ? GameObject.Find("PlayerContainer").transform.position : transform.position;
                 GameObject newSpawnerObject = Instantiate(w.bulletSpawnerPrefabs[i]);
                 BulletSpawner newSpawner = newSpawnerObject.GetComponent<BulletSpawner>();
                 if (!w.randomPosOverride)
