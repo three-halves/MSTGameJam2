@@ -1113,6 +1113,9 @@ MonoBehaviour:
   _rollCooldown: 0.3
   _rollingGravity: 0.042
   _rollingJumpHeight: 0.4
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 1
   playerSprites:
   - {fileID: 821574138}
   - {fileID: 719088413}
@@ -1245,7 +1248,7 @@ CharacterController:
   m_Height: 2
   m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0.04
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: -0.15, z: 0}

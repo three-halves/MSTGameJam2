@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     private Vector3 _moveDelta = new();
     // Input vector stored at start of a roll
     private Vector3 _rollMoveDelta = new();
+    // Most recent valid ground normal
+    private Vector3 lastGroundNormal = new();
 
     // Jump is input but player has not performed jumped yet
     private bool _willJump = false;
@@ -41,6 +43,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _rollCooldown;
     [SerializeField] private float _rollingGravity;
     [SerializeField] private float _rollingJumpHeight;
+    [SerializeField] private LayerMask groundMask;
     
     private bool _groundedLastFrame = false;
     private bool _hitThisFrame = false;
@@ -98,13 +101,21 @@ public class Player : MonoBehaviour
             delta = _moveDelta * _walkSpeed;
             if (_currentRollTimer > 0)
             {
-                delta = _rollMoveDelta * (_characterController.isGrounded ? _rollSpeed : _airRollSpeed);
+                delta = _rollMoveDelta * (IsGrounded() ? _rollSpeed : _airRollSpeed);
             }
+        }
+
+        // apply ground normal to lateral movement 
+        Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, _characterController.height, groundMask);
+        if (hit.normal != Vector3.zero)
+        {
+            lastGroundNormal = hit.normal;
+            delta = Quaternion.FromToRotation(Vector3.up, hit.normal) * delta;
         }
 
         // jumping and gravity
         delta.y = _characterController.velocity.y * Time.fixedDeltaTime;
-        if (_willJump && _characterController.isGrounded)
+        if (_willJump && IsGrounded())
         {
             delta.y = _currentRollTimer <= 0 ? _jumpHeight : _rollingJumpHeight;
             _willJump = false;
@@ -132,13 +143,13 @@ public class Player : MonoBehaviour
 
         _isIntangible = _intangibleTimer > 0;
         // continue dash in air
-        if (_characterController.isGrounded) 
+        if (IsGrounded()) 
         {
             _currentRollTimer -= Time.deltaTime;
             _intangibleTimer -= Time.deltaTime;
         }
         // stop air dash on land
-        if (_characterController.isGrounded && !_groundedLastFrame)
+        if (IsGrounded() && !_groundedLastFrame)
         {
             _currentRollTimer = 0f;
             _intangibleTimer = 0f;
@@ -147,7 +158,7 @@ public class Player : MonoBehaviour
         UpdateVisuals();
 
         _hitThisFrame = false;
-        _groundedLastFrame = _characterController.isGrounded;
+        _groundedLastFrame = IsGrounded();
     }
 
     // update player visuals and animation variables
@@ -158,16 +169,16 @@ public class Player : MonoBehaviour
         else playerHeadSR.color = Color.white;
 
         if (_moveDelta.x != 0) playerVisual.transform.localScale = new Vector3((_moveDelta.x > 0) ? startingScale.x : -startingScale.x, startingScale.y, startingScale.z);
-        animator.SetBool("Walk", (_moveDelta != Vector3.zero) && _currentRollTimer <= 0 && _characterController.isGrounded && !_rollHeld);
+        animator.SetBool("Walk", (_moveDelta != Vector3.zero) && _currentRollTimer <= 0 && IsGrounded() && !_rollHeld);
         animator.SetBool("Roll", _currentRollTimer > 0);
         animator.SetBool("Run", _rollHeld && !_willRoll && _currentRollTimer <= 0 && (_moveDelta != Vector3.zero));
-        animator.SetBool("InAir", !_characterController.isGrounded);
+        animator.SetBool("InAir", !IsGrounded());
         animator.SetFloat("YVel", _characterController.velocity.y);
 
         // shoe sprite
-        Sprite s = _characterController.isGrounded ? bootWalkSprite : bootJumpSprite;
+        Sprite s = IsGrounded() ? bootWalkSprite : bootJumpSprite;
         // shoe layer order, either behind or in front of head
-        int o = (_characterController.isGrounded || _currentRollTimer > 0) ? 1 : 3;
+        int o = (IsGrounded() || _currentRollTimer > 0) ? 1 : 3;
         playerSprites[0].sprite = s;
         playerSprites[1].sprite = s;
         playerSprites[0].sortingOrder = o;
@@ -262,5 +273,11 @@ public class Player : MonoBehaviour
     {
         _willRoll = v.isPressed;
         _rollHeld = v.isPressed;
+    }
+
+    private bool IsGrounded()
+    {
+        // Change raycast length based on surface angle
+        return Physics.Raycast(transform.position + _characterController.center, Vector3.down, _characterController.height * 0.53f, groundMask);
     }
 }
