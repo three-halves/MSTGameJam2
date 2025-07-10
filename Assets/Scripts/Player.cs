@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private HealthDisp hpDisp;
     [SerializeField] private Transform cameraTransform;
     [SerializeField] TMPro.TMP_Text scoreText;
+    [SerializeField] private Transform cameraContainerTransform;
     private CharacterController _characterController;
 
     // controller input vector
@@ -43,7 +44,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float _rollCooldown;
     [SerializeField] private float _rollingGravity;
     [SerializeField] private float _rollingJumpHeight;
-    [SerializeField] private LayerMask groundMask;
+
+    [SerializeField] private LayerMask _groundMask;
+    [SerializeField] private Vector2 _lookSens;
     
     private bool _groundedLastFrame = false;
     private bool _hitThisFrame = false;
@@ -82,6 +85,7 @@ public class Player : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
         startingScale = playerVisual.localScale;
         playerHeadSR = playerVisual.transform.GetChild(2).GetComponent<SpriteRenderer>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void FixedUpdate()
@@ -106,7 +110,7 @@ public class Player : MonoBehaviour
         }
 
         // apply ground normal to lateral movement 
-        Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, _characterController.height, groundMask);
+        Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, _characterController.height, _groundMask);
         if (hit.normal != Vector3.zero)
         {
             lastGroundNormal = hit.normal;
@@ -168,7 +172,17 @@ public class Player : MonoBehaviour
         if (_isIntangible) playerHeadSR.color = Color.green;
         else playerHeadSR.color = Color.white;
 
-        if (_moveDelta.x != 0) playerVisual.transform.localScale = new Vector3((_moveDelta.x > 0) ? startingScale.x : -startingScale.x, startingScale.y, startingScale.z);
+        // Billboard player
+        var target = cameraTransform.forward;
+        target.y = playerVisual.transform.forward.y;
+        playerVisual.forward = target;
+
+        // flip sprite based on movement
+        if (_moveDelta.x != 0) playerVisual.transform.localScale = new Vector3(
+            (_moveDelta.x > 0) ? startingScale.x : -startingScale.x, 
+            startingScale.y, 
+            startingScale.z
+        );
         animator.SetBool("Walk", (_moveDelta != Vector3.zero) && _currentRollTimer <= 0 && IsGrounded() && !_rollHeld);
         animator.SetBool("Roll", _currentRollTimer > 0);
         animator.SetBool("Run", _rollHeld && !_willRoll && _currentRollTimer <= 0 && (_moveDelta != Vector3.zero));
@@ -275,9 +289,17 @@ public class Player : MonoBehaviour
         _rollHeld = v.isPressed;
     }
 
+    void OnLook(InputValue value)
+    {
+        var v = value.Get<Vector2>();
+        cameraContainerTransform.Rotate(Vector3.up, v.x * _lookSens.x, Space.World);
+        cameraContainerTransform.Rotate(Vector3.right, v.y * _lookSens.y, Space.Self);
+        CalculateMoveInputDir();
+    }
+
     private bool IsGrounded()
     {
         // Change raycast length based on surface angle
-        return Physics.Raycast(transform.position + _characterController.center, Vector3.down, _characterController.height * 0.53f, groundMask);
+        return Physics.Raycast(transform.position + _characterController.center, Vector3.down, _characterController.height * 0.53f, _groundMask);
     }
 }
